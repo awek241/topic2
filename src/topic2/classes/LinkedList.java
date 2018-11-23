@@ -31,10 +31,18 @@ public class LinkedList<E> implements List {
 
 	}
 
+	// *****INSTANZVARIABLEN***s**
+	private DoubleNode<E> head;
+
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = 0;
+		DoubleNode<E> position = head;
+		while (position != null) {
+			count++;
+			position = position.next;
+		}
+		return count;
 	}
 
 	@Override
