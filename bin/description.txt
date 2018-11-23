@@ -1,0 +1,14 @@
+TOPIC 2: Linked-List Implementation of Linear Data Structures
+
+Implement the following ADTs in Java using linked structures: Stack, Queue, List, Position. Use Java generics to fix the type of the elements stored in your data structures.
+
+For this consider the given generic Java interfaces Stack<E>, Queue<E>, List<E>, and Position<E>. Write corresponding classes LinkedStack<E>, LinkedQueue<E>, and LinkedList<E>, which implement the interfaces. For LinkedStack<E> and LinkedQueue<E>,  write a local protected class SingleNode, which implements Position<E>. For LinkedList<E>, write a local protected class DoubleNode, which implements Position<E>. 
+
+For your implementation, follow the guidelines and pseudo-code algorithms from the course slides and exercises, for example consider the inclusion of header and trailer nodes.
+
+Write one or several example programs as a first test.
+
+Test your implementation with JUnit5. Corresponding JUnit test classes are given. Your  solution needs to pass all the tests.
+
+Document your classes and the given interfaces with JavaDoc.
+
