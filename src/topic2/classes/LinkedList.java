@@ -7,26 +7,43 @@ import topic2.interfaces.Position;
 
 public class LinkedList<E> implements List {
 
+	// TODO double node? momentan single
 	protected class DoubleNode<E> implements Position<E> {
 
-		private E element;
-		private DoubleNode<E> next;
+		public E element;
+		public DoubleNode<E> previous = null;
+		public DoubleNode<E> next = null;
 
-		public DoubleNode(E element) {
+		/**
+		 * @param element
+		 * @param next
+		 * @param previous
+		 */
+		public DoubleNode(DoubleNode<E> previous, E element, DoubleNode<E> next) {
+			this.previous = previous;
 			this.element = element;
-		}
-
-		public void setNext(DoubleNode<E> next) {
 			this.next = next;
 		}
 
-		public DoubleNode<E> getNext() {
-			return next;
+		public DoubleNode() {
+			element = null;
+			next = null;
+			previous = null;
+		}
+
+		// TODO lernen wieso DoubleNode<E> hier nicht funktioniert
+		public DoubleNode(E element) {
+			this.element = element;
 		}
 
 		@Override
 		public E element() {
 			return element;
+		}
+
+		public boolean compare(Object o) {
+			return false;
+
 		}
 
 	}
@@ -47,20 +64,27 @@ public class LinkedList<E> implements List {
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return head == null;
 	}
 
 	@Override
 	public Position first() throws EmptyListException {
-		// TODO Auto-generated method stub
-		return null;
+		if (head == null) {
+			throw new EmptyListException();
+		}
+		return head;
 	}
 
 	@Override
 	public Position last() throws EmptyListException {
-		// TODO Auto-generated method stub
-		return null;
+		if (head == null) {
+			throw new EmptyListException();
+		}
+		DoubleNode<E> node = head;
+		while (node != null) {
+			node = node.next;
+		}
+		return node;
 	}
 
 	@Override
@@ -77,26 +101,52 @@ public class LinkedList<E> implements List {
 
 	@Override
 	public Position insertFirst(Object e) {
-		// TODO Auto-generated method stub
-		return null;
+		DoubleNode temp = new DoubleNode(null, e, head);
+		head.previous = temp;
+		head = temp;
+		return head;
 	}
 
 	@Override
 	public Position insertLast(Object e) {
-		// TODO Auto-generated method stub
-		return null;
+		if (head == null) {
+			return head = new DoubleNode(e);
+		} else {
+			DoubleNode last = (DoubleNode) last();
+			DoubleNode newNode = new DoubleNode(last, e, null);
+			last.next = newNode;
+			return newNode;
+		}
 	}
 
 	@Override
 	public Position insertBefore(Position p, Object e) throws InvalidPositionException {
-		// TODO Auto-generated method stub
-		return null;
+		DoubleNode<E> node = head;
+		while (!node.equals(p)) {
+			node = node.next;
+			if (node == null) {
+				throw new InvalidPositionException();
+			}
+		}
+		DoubleNode<E> newNode = new DoubleNode(node.previous, e, node);
+		node.previous.next = newNode;
+		node.previous = newNode;
+		return newNode;
 	}
 
 	@Override
 	public Position insertAfter(Position p, Object e) throws InvalidPositionException {
-		// TODO Auto-generated method stub
-		return null;
+		DoubleNode<E> node = head;
+		while (!node.equals(p)) {
+			node = node.next;
+			if (node == null) {
+				throw new InvalidPositionException();
+			}
+		}
+		DoubleNode<E> newNode = new DoubleNode(node, e, node.next);
+		node.next.previous = newNode;
+		node.next = newNode;
+		return newNode;
 	}
 
 	@Override
@@ -119,14 +169,19 @@ public class LinkedList<E> implements List {
 
 	@Override
 	public boolean isFirst(Position p) throws InvalidPositionException {
-		// TODO Auto-generated method stub
-		return false;
+		return head == p;
 	}
 
 	@Override
 	public boolean isLast(Position p) throws InvalidPositionException {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	private void checkNull(Position p) {
+		if (p == null) {
+			throw new InvalidPositionException();
+		}
 	}
 
 }
