@@ -6,19 +6,18 @@ import topic2.interfaces.Stack;
 
 public class LinkedStack<E> implements Stack<E> {
 
-	// Top Knoten
-
-	private SingleNode<E> head;
-	private SingleNode<E> prev;
+	private SingleNode<E> top; // Referenz zum letzthinzugefügten Knoten
+	private SingleNode<E> next;
 
 	protected class SingleNode<E> implements Position<E> {
 
 		// TODO Prüfen ob noch bessere Anpassung möglich
 
-		private E element;
-		private SingleNode<E> next;
+		public E element;
+		public SingleNode<E> next = null;
 
-		public SingleNode(E element) {
+		public SingleNode(SingleNode<E> next, E element) {
+			this.next = next;
 			this.element = element;
 		}
 
@@ -40,7 +39,7 @@ public class LinkedStack<E> implements Stack<E> {
 	@Override
 	public int size() {
 		int count = 0;
-		SingleNode<E> position = head;
+		SingleNode<E> position = top;
 		while (position != null) {
 			count++;
 			position = position.next;
@@ -50,7 +49,7 @@ public class LinkedStack<E> implements Stack<E> {
 
 	@Override
 	public boolean isEmpty() {
-		return head == null;
+		return top == null;
 	}
 
 	@Override
@@ -58,14 +57,14 @@ public class LinkedStack<E> implements Stack<E> {
 	public E top() throws EmptyStackException {
 		if (isEmpty())
 			throw new EmptyStackException();
-		return head.element;
+		return top.element;
 	}
 
 	@Override
 	public void push(E e) {
-		prev = new SingleNode<E>(e);
-		prev.setNext(head);
-		head = prev;
+		next = new SingleNode<E>(top, e);
+		next.setNext(top);
+		top = next;
 	}
 
 	@Override
@@ -73,9 +72,8 @@ public class LinkedStack<E> implements Stack<E> {
 		if (isEmpty()) {
 			throw new EmptyStackException();
 		}
-		E temp = head.element();
-		head = prev.getNext();
+		E temp = top.element();
+		top = top.next;
 		return temp;
-		// prev.setNext(head);
 	}
 }
