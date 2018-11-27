@@ -6,12 +6,11 @@ import topic2.interfaces.Stack;
 
 public class LinkedStack<E> implements Stack<E> {
 
-	private SingleNode<E> top; // Referenz zum letzthinzugefügten Knoten
+	private SingleNode<E> top;
 	private SingleNode<E> next;
 
+	@SuppressWarnings("hiding")
 	protected class SingleNode<E> implements Position<E> {
-
-		// TODO Prüfen ob noch bessere Anpassung möglich
 
 		public E element;
 		public SingleNode<E> next = null;
@@ -37,37 +36,56 @@ public class LinkedStack<E> implements Stack<E> {
 	}
 
 	@Override
+	/**
+	 * gibt die Grösse n des LinkedStack's zurück
+	 */
 	public int size() {
-		int count = 0;
+		int size = 0;
 		SingleNode<E> position = top;
 		while (position != null) {
-			count++;
+			size++;
 			position = position.next;
 		}
-		return count;
+		return size;
 	}
 
 	@Override
+	/**
+	 * prüft ob der LinkedStack leer ist.
+	 */
 	public boolean isEmpty() {
 		return top == null;
 	}
 
 	@Override
-	// TODO Prüfen
+	/**
+	 * gibt das Element vom letzthinzugefügten Knoten wieder ohne dies zu entfernen
+	 */
 	public E top() throws EmptyStackException {
 		if (isEmpty())
 			throw new EmptyStackException();
-		return top.element;
+		return top.element();
 	}
 
 	@Override
+	/**
+	 * fügt einen neuen Knoten hinzu und gibt schneidet die Referenz vom bisherigen
+	 * Top Knoten zu Next Knoten und neuer Knoten bekommt die Top Referenz.
+	 */
 	public void push(E e) {
 		next = new SingleNode<E>(top, e);
 		next.setNext(top);
 		top = next;
+		size();
 	}
 
 	@Override
+	/**
+	 * gibt das Element vom letzthinzugefügten Knoten wieder und übergibt dem Next
+	 * Knoten neu die Referenz als Head Knoten.
+	 */
+	// TODO Grösse n muss beim pop noch um eins reduziert werden.
+
 	public E pop() throws EmptyStackException {
 		if (isEmpty()) {
 			throw new EmptyStackException();
