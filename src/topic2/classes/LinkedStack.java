@@ -8,6 +8,7 @@ public class LinkedStack<E> implements Stack<E> {
 
 	private SingleNode<E> top;
 	private SingleNode<E> next;
+	private int size;
 
 	@SuppressWarnings("hiding")
 	protected class SingleNode<E> implements Position<E> {
@@ -40,12 +41,6 @@ public class LinkedStack<E> implements Stack<E> {
 	 * gibt die Grösse n des LinkedStack's zurück
 	 */
 	public int size() {
-		int size = 0;
-		SingleNode<E> position = top;
-		while (position != null) {
-			size++;
-			position = position.next;
-		}
 		return size;
 	}
 
@@ -76,7 +71,7 @@ public class LinkedStack<E> implements Stack<E> {
 		next = new SingleNode<E>(top, e);
 		next.setNext(top);
 		top = next;
-		size();
+		size++;
 	}
 
 	@Override
@@ -92,6 +87,7 @@ public class LinkedStack<E> implements Stack<E> {
 		}
 		E temp = top.element();
 		top = top.next;
+		size--;
 		return temp;
 	}
 }
