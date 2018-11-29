@@ -1,15 +1,13 @@
 package topic2.classes;
 
 import topic2.exceptions.EmptyQueueException;
-import topic2.exceptions.EmptyStackException;
 import topic2.interfaces.Position;
 import topic2.interfaces.Queue;
 
 public class LinkedQueue<E> implements Queue<E> {
 
 	private SingleNode<E> front;
-	private SingleNode<E> next;
-	private SingleNode<E> back;
+	private SingleNode<E> rear;
 	private int size;
 
 	@SuppressWarnings("hiding")
@@ -60,9 +58,8 @@ public class LinkedQueue<E> implements Queue<E> {
 	 * löschen
 	 */
 	public E front() throws EmptyQueueException {
-		if (isEmpty()) {
-			throw new EmptyStackException();
-		}
+		if (isEmpty())
+			throw new EmptyQueueException();
 		return front.element();
 	}
 
@@ -72,9 +69,14 @@ public class LinkedQueue<E> implements Queue<E> {
 	 * eins.
 	 */
 	public void enqueue(E e) {
-		next = new SingleNode<E>(back, e);
-		next.setNext(back);
-		back = next;
+		if (isEmpty()) {
+			front = new SingleNode<E>(front, e);
+			front.next = front;
+			size++;
+		}
+		front.next = rear;
+		rear = new SingleNode<E>(rear, e);
+		rear.setNext(front);
 		size++;
 	}
 
@@ -87,7 +89,7 @@ public class LinkedQueue<E> implements Queue<E> {
 
 	public E dequeue() throws EmptyQueueException {
 		if (isEmpty()) {
-			throw new EmptyStackException();
+			throw new EmptyQueueException();
 		}
 		E temp = front.element();
 		front = front.next;
