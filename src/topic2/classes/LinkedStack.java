@@ -37,9 +37,12 @@ public class LinkedStack<E> implements Stack<E> {
 	}
 
 	@Override
+
 	/**
 	 * gibt die Grösse n des LinkedStack's zurück
+	 * 
 	 */
+
 	public int size() {
 		return size;
 	}
@@ -79,7 +82,6 @@ public class LinkedStack<E> implements Stack<E> {
 	 * gibt das Element vom letzthinzugefügten Knoten wieder und übergibt dem Next
 	 * Knoten neu die Referenz als Head Knoten.
 	 */
-	// TODO Grösse n muss beim pop noch um eins reduziert werden.
 
 	public E pop() throws EmptyStackException {
 		if (isEmpty()) {

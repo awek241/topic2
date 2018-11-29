@@ -10,6 +10,7 @@ public class LinkedQueue<E> implements Queue<E> {
 	private SingleNode<E> front;
 	private SingleNode<E> next;
 	private SingleNode<E> back;
+	private int size;
 
 	@SuppressWarnings("hiding")
 	protected class SingleNode<E> implements Position<E> {
@@ -42,13 +43,7 @@ public class LinkedQueue<E> implements Queue<E> {
 	 * gibt die Grösse n des LinkedQueue's zurück
 	 */
 	public int size() {
-		int count = 0;
-		SingleNode<E> position = back;
-		while (position != null) {
-			count++;
-			position = position.next;
-		}
-		return count;
+		return size;
 	}
 
 	@Override
@@ -80,7 +75,7 @@ public class LinkedQueue<E> implements Queue<E> {
 		next = new SingleNode<E>(back, e);
 		next.setNext(back);
 		back = next;
-		size();
+		size++;
 	}
 
 	@Override
@@ -96,6 +91,7 @@ public class LinkedQueue<E> implements Queue<E> {
 		}
 		E temp = front.element();
 		front = front.next;
+		size--;
 		return temp;
 	}
 
