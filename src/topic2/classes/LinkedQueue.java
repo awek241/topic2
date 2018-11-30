@@ -6,11 +6,6 @@ import topic2.interfaces.Queue;
 
 public class LinkedQueue<E> implements Queue<E> {
 
-	private SingleNode<E> front;
-	private SingleNode<E> rear;
-	private int size;
-
-	@SuppressWarnings("hiding")
 	protected class SingleNode<E> implements Position<E> {
 
 		public E element;
@@ -36,6 +31,10 @@ public class LinkedQueue<E> implements Queue<E> {
 
 	}
 
+	private SingleNode<E> front;
+	private SingleNode<E> rear;
+	private int size = 0;
+
 	@Override
 	/**
 	 * gibt die Grösse n des LinkedQueue's zurück
@@ -49,7 +48,9 @@ public class LinkedQueue<E> implements Queue<E> {
 	 * prüft ob der LinkedQueue leer ist.
 	 */
 	public boolean isEmpty() {
-		return front == null;
+		if (size == 0)
+			return true;
+		return false;
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class LinkedQueue<E> implements Queue<E> {
 	 * löschen
 	 */
 	public E front() throws EmptyQueueException {
-		if (isEmpty())
+		if (size == 0)
 			throw new EmptyQueueException();
 		return front.element();
 	}
@@ -69,14 +70,15 @@ public class LinkedQueue<E> implements Queue<E> {
 	 * eins.
 	 */
 	public void enqueue(E e) {
-		if (isEmpty()) {
-			front = new SingleNode<E>(front, e);
-			front.next = front;
-			size++;
+		SingleNode<E> newNode = new SingleNode<E>(front, e);
+		if (size == 0) {
+			front = newNode;
+			rear = newNode;
+
+		} else {
+			rear.next = newNode;
+			rear = newNode;
 		}
-		front.next = rear;
-		rear = new SingleNode<E>(rear, e);
-		rear.setNext(front);
 		size++;
 	}
 
@@ -88,7 +90,7 @@ public class LinkedQueue<E> implements Queue<E> {
 	// TODO Grösse n muss beim pop noch um eins reduziert werden.
 
 	public E dequeue() throws EmptyQueueException {
-		if (isEmpty()) {
+		if (size == 0) {
 			throw new EmptyQueueException();
 		}
 		E temp = front.element();

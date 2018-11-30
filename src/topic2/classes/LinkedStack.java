@@ -33,7 +33,6 @@ public class LinkedStack<E> implements Stack<E> {
 		public E element() {
 			return element;
 		}
-
 	}
 
 	@Override
