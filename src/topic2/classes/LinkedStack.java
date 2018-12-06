@@ -36,12 +36,10 @@ public class LinkedStack<E> implements Stack<E> {
 	}
 
 	@Override
-
 	/**
 	 * gibt die Grösse n des LinkedStack's zurück
 	 * 
 	 */
-
 	public int size() {
 		return size;
 	}
