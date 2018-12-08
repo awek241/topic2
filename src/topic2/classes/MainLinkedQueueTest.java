@@ -2,6 +2,7 @@ package topic2.classes;
 
 public class MainLinkedQueueTest {
 
+	@SuppressWarnings("unchecked")
 	public static <E> void main(String[] args) {
 
 		LinkedQueue<E> queue1 = new LinkedQueue<E>();

@@ -2,6 +2,7 @@ package topic2.classes;
 
 public class MainLinkedStackTest {
 
+	@SuppressWarnings("unchecked")
 	public static <E> void main(String[] args) {
 
 		LinkedStack<E> stack1 = new LinkedStack<E>();

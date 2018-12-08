@@ -4,28 +4,25 @@ import topic2.exceptions.EmptyStackException;
 import topic2.interfaces.Position;
 import topic2.interfaces.Stack;
 
+/** The LinkedStack will consist of SingleNode Objects */
+
 public class LinkedStack<E> implements Stack<E> {
 
-	private SingleNode<E> top;
-	private SingleNode<E> next;
-	private int size;
-
-	@SuppressWarnings("hiding")
-	protected class SingleNode<E> implements Position<E> {
+	protected class SingleNode implements Position<E> {
 
 		public E element;
-		public SingleNode<E> next = null;
+		public SingleNode next = null;
 
-		public SingleNode(SingleNode<E> next, E element) {
+		public SingleNode(SingleNode next, E element) {
 			this.next = next;
 			this.element = element;
 		}
 
-		public void setNext(SingleNode<E> next) {
+		public void setNext(SingleNode next) {
 			this.next = next;
 		}
 
-		public SingleNode<E> getNext() {
+		public SingleNode getNext() {
 			return next;
 		}
 
@@ -35,51 +32,49 @@ public class LinkedStack<E> implements Stack<E> {
 		}
 	}
 
+	/** Class variables */
+	private SingleNode top;
+	private int size;
+
+	/** Returns the current size. */
 	@Override
-	/**
-	 * gibt die Grösse n des LinkedStack's zurück
-	 * 
-	 */
 	public int size() {
 		return size;
 	}
 
+	/** Checks if the LinkedStack is empty. */
 	@Override
-	/**
-	 * prüft ob der LinkedStack leer ist.
-	 */
 	public boolean isEmpty() {
 		return top == null;
 	}
 
+	/** Returns the object from the last node added without removing it. */
 	@Override
-	/**
-	 * gibt das Element vom letzthinzugefügten Knoten wieder ohne dies zu entfernen
-	 */
 	public E top() throws EmptyStackException {
 		if (isEmpty())
 			throw new EmptyStackException();
 		return top.element();
 	}
 
-	@Override
 	/**
-	 * fügt einen neuen Knoten hinzu und gibt schneidet die Referenz vom bisherigen
-	 * Top Knoten zu Next Knoten und neuer Knoten bekommt die Top Referenz.
+	 * Adds a new node with an element and returns the reference from the previous
+	 * top node to Next node and new node gets the top reference and increases the
+	 * size by one.
 	 */
+	@Override
 	public void push(E e) {
-		next = new SingleNode<E>(top, e);
+		SingleNode next;
+		next = new SingleNode(top, e);
 		next.setNext(top);
 		top = next;
 		size++;
 	}
 
-	@Override
 	/**
-	 * gibt das Element vom letzthinzugefügten Knoten wieder und übergibt dem Next
-	 * Knoten neu die Referenz als Head Knoten.
+	 * Returns the element of the last node added and passes the reference as head
+	 * node to the next node and reduces the size by one.
 	 */
-
+	@Override
 	public E pop() throws EmptyStackException {
 		if (isEmpty()) {
 			throw new EmptyStackException();
