@@ -28,8 +28,11 @@ public class MainLinkedQueueTest {
 		System.out.println(queue1.front() + " / Expected: Betti");
 		queue1.dequeue();
 		System.out.println(queue1.front() + " / Expected: Chris");
+		queue1.enqueue(name1);
 		queue1.dequeue();
 		System.out.println(queue1.front() + " / Expected: Dave");
+		queue1.dequeue();
+		System.out.println(queue1.front() + " / Expected: Alf");
 		queue1.dequeue();
 		System.out.println(queue1.size() + "  / Expected: 0 ");
 

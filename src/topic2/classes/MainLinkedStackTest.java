@@ -31,6 +31,12 @@ public class MainLinkedStackTest {
 
 		System.out.println(stack1.pop() + " / Expectet: Chris");
 
+		stack1.push(name);
+
+		System.out.println(stack1.top() + " / Expectet: Alf");
+
+		System.out.println(stack1.pop() + " / Expectet: Alf");
+
 		System.out.println(stack1.top() + " / Expectet: Betti");
 
 		System.out.println(stack1.size() + " / Expectet: 2");
